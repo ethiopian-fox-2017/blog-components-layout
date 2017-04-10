@@ -24,3 +24,21 @@
   padding: 0px;
   margin-left: 10px;
 }
+.contentborder{
+  border-style: solid;
+  border-color: black;
+}
+.costbutton{
+  border-style: solid;
+  border-color: white;
+  background-color: black;
+  color: white;
+  height: 50px;
+  font-size: 15px;
+}
+.articleimg{
+  min-height: 480px;
+  min-width: 480px;
+  max-height: 480px;
+  max-width: 480px;
+}

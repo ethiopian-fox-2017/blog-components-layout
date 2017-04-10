@@ -1,4 +1,5 @@
-const article = require('../models/Article');
+const article = require('../models/Article'),
+      slug = require('slug');
 
 let allArticles = (req, res, next) => {
   article.find({}, (err, articles) => {
@@ -11,12 +12,8 @@ let allArticles = (req, res, next) => {
 }
 
 let postNewArticle = (req, res, next) => {
-  article.create({
-    title: req.body.title,
-    content: req.body.content,
-    category: req.body.category,
-    slug: req.body.slug
-  }, (err, article) => {
+  req.body.slug = slug(req.body.title).toLowerCase();
+  article.create(req.body, (err, article) => {
     if (err) {
       res.json(err);
     } else {
@@ -38,13 +35,11 @@ let getSingleArticle = (req, res, next) => {
 }
 
 let updateArticle = (req, res, next) => {
-  article.update({
+  req.body.slug = slug(req.body.title).toLowerCase();
+  article.findOneAndUpdate({
     _id: req.params.id
-  },{
-    title: req.body.title,
-    content: req.body.content,
-    category: req.body.category,
-    slug: req.body.slug
+  }, req.body, {
+    new: true
   }, (err, article) => {
     if (err) {
       res.json(err);

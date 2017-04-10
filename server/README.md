@@ -45,6 +45,7 @@ This simple blog engine will only have two models, user and article. It's built 
     "mongodb": "^2.2.11",
     "mongoose": "^4.6.6",
     "morgan": "~1.7.0",
+    "slug": "^0.9.1"
   }
 }
 

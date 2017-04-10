@@ -1,6 +1,6 @@
 Vue.component('header1',{
   template:`
-  <div class="columns container-bg is-marginless">
+  <div class="columns container-bg is-marginless border">
       <div class="column">
           <div class="field is-marginless">
               <p class="control">
