@@ -23,8 +23,9 @@ let postNewArticle = (req, res, next) => {
 }
 
 let getSingleArticle = (req, res, next) => {
+  let theSlug = slug(req.params.slug).toLowerCase()
   article.findOne({
-    slug: req.params.slug
+    slug: theSlug
   }, (err, article) => {
     if (err) {
       res.json(err);

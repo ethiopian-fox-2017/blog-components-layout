@@ -6,7 +6,7 @@ const express = require('express'),
       cookieParser = require('cookie-parser'),
       bodyParser = require('body-parser'),
       mongoose = require('mongoose'),
-
+      cors = require('cors'),
       //All Route Files
       routes = require('./routes/index'),
       article = require('./routes/apiArticle'),
@@ -16,6 +16,7 @@ const express = require('express'),
 
 //load environment variables with dotenv
 require('dotenv').config()
+
 
 //Database connection
 mongoose.Promise = global.Promise;
@@ -33,9 +34,9 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 
 
+app.use(cors());
 app.use('/', routes);
 app.use('/api/article', article);
-
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
   let err = new Error('Not Found');
