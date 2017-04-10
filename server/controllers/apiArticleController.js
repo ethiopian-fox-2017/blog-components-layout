@@ -1,3 +1,5 @@
+'use strict'
+
 const article = require('../models/Article'),
       slug = require('slug');
 
