@@ -10,12 +10,15 @@ const express = require('express'),
       //All Route Files
       routes = require('./routes/index'),
       article = require('./routes/apiArticle'),
+      cors = require('cors'),
 
       //Express Instance
       app = express();
 
 //load environment variables with dotenv
 require('dotenv').config()
+
+
 
 //Database connection
 mongoose.Promise = global.Promise;
@@ -31,7 +34,7 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
-
+app.use(cors());
 
 app.use('/', routes);
 app.use('/api/article', article);
