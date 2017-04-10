@@ -1,0 +1,44 @@
+.bg-img {
+     background-image: url("https://www.techworm.net/wp-content/uploads/2016/04/programmer-coding-scripts-automation-hacking-702x336.jpg") ;
+     background-position: center center;
+     background-repeat:  no-repeat;
+     background-attachment: fixed;
+     background-size:  cover;
+     background-color: #999;
+
+}
+.loc-center {
+    margin: auto;
+}
+.container-bg{
+  background-color: black;
+}
+.edittittle{
+  font-size: 100px;
+  color: white;
+}
+
+.nav-text{
+  font-size: 30px;
+  color: white;
+  padding: 0px;
+  margin-left: 10px;
+}
+.contentborder{
+  border-style: solid;
+  border-color: black;
+}
+.costbutton{
+  border-style: solid;
+  border-color: white;
+  background-color: black;
+  color: white;
+  height: 50px;
+  font-size: 15px;
+}
+.articleimg{
+  min-height: 480px;
+  min-width: 480px;
+  max-height: 480px;
+  max-width: 480px;
+}
