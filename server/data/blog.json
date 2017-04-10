@@ -1,0 +1,16 @@
+[
+  {
+    "title" : "Belajar HTML sederhana",
+    "content" : "Belajar html sederhana di hacktiv8",
+    "category" : "belajar",
+    "image" : "https://fthmb.tqn.com/0WjlepKEp-sQj2iQfHBIve_ff0Q=/1280x853/filters:no_upscale():fill(FFCC00,1)/about/116248249-56a9f67b5f9b58b7d0003904.jpg",
+    "video" : ""
+  },
+  {
+    "title" : "Belajar CSS sederhana",
+    "content" : "Belajar LAYOUTING CSS sederhana di hacktiv8",
+    "category" : "desain",
+    "image" : "https://fthmb.tqn.com/WtLJo6xVA_Bynnozcl2NGL8sSQA=/3072x2048/filters:no_upscale():fill(FFCC00,1)/about/182147263-56a9f69f3df78cf772abc6aa.jpg",
+    "video" : ""
+  }
+]
