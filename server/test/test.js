@@ -27,8 +27,7 @@ describe('BROWSER USER TEST', function() {
         done()
       })
       .catch(function(err) {
-        console.log(err)
-
+        console.log(err.message)
         done()
       })
   })
