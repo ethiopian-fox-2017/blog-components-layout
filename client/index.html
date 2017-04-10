@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Blog Component Layout</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.4.0/css/bulma.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="./style/style.css">
+    <script src="https://unpkg.com/vue@2.2.6"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="https://500px.com/embed.js"></script>
+  </head>
+  <body>
+
+    <div id="vue">
+      <div class="columns is-mobile">
+        <div class="column is-two-thirds">
+          <blog-page :blog-data="blogData"></blog-page>
+        </div>
+        <div id="sidebar" class="column">
+          <sidebar :article-list="articleList" @pick-article="changeArticle"></sidebar>
+        </div>
+      </div>
+    </div>
+
+    <script src="./script/script.js"></script>
+  </body>
+</html>
