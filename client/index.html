@@ -1,0 +1,203 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Blog Sederhana</title>
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+  <link rel="stylesheet" id="bulma" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.3.2/css/bulma.min.css" />
+  <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/vue"></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<link rel="stylesheet" type="text/css" href="assets/css/sweetalert.css">
+<link rel="stylesheet" type="text/css" href="assets/css/modals.css">
+</head>
+<body>
+  <div id="app">
+    <navigation-header :title="aboutUs.name" :data-create="created" @graball="getList"></navigation-header>
+    <div class="container">
+      <div class="columns">
+        <div class="column is-4">
+          <sidebar @details="getDetail" :articles="articles"></sidebar>
+        </div>
+        <div class="column is-8">
+          <contents v-for="content in contents " :contents="content"></contents>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- template header -->
+  <template id="nav-header">
+    <nav class="nav">
+      <div class="nav-left">
+        <a class="nav-item">
+          <p class="is-dark"></p>
+          <p class="subtitle is-5">
+            <strong>{{title}}</strong>
+          </p>
+        </a>
+      </div>
+
+  <!-- This "nav-toggle" hamburger menu is only visible on mobile -->
+    <span class="nav-toggle">
+      <span></span>
+      <span></span>
+      <span></span>
+    </span>
+
+  <!-- This "nav-menu" is hidden on mobile -->
+  <!-- Add the modifier "is-active" to display it on mobile -->
+    <div class="nav-right nav-menu">
+      <a class="nav-item">
+        Home
+      </a>
+      <a class="nav-item">
+        Blog
+      </a>
+
+      <span class="nav-item">
+        <a @click="showModal = true" class="button is-primary">
+          <span>Create</span>
+        </a>
+        <form-create v-if="showModal" @close="showModal=false" :data-create="dataCreate" :show-modal="showModal" @close="close" @graball="graball"></form-create>
+      </span>
+    </div>
+    </nav>
+  </template>
+
+  <!-- template sidebar -->
+<template id="sidebar">
+  <nav class="panel">
+    <p class="panel-heading">
+      Articles
+    </p>
+    <search-bar></search-bar>
+    <articles-list @detail="detail" v-for="article in articles " :articles="article"></articles-list>
+  </nav>
+</template>
+
+
+<template id="list">
+  <a @click="detail(articles)"class="panel-block is-active">
+    <span class="panel-icon">
+      <i class="fa fa-book"></i>
+    </span>
+    {{articles.title}}
+  </a>
+</template>
+
+<template id="search">
+  <div class="panel-block">
+    <p class="control has-icon">
+      <input class="input is-small" type="text" placeholder="Search">
+      <span class="icon is-small">
+        <i class="fa fa-search"></i>
+      </span>
+    </p>
+
+  </div>
+</template>
+
+
+<!-- template post -->
+<template id="contents">
+  <div class="card">
+    <div class="card-image">
+      <figure class="image is-4by3">
+        <img :src="contents.image" alt="Image">
+      </figure>
+    </div>
+    <div class="card-content">
+      <div class="media">
+        <div class="media-left">
+          <figure class="image is-48x48">
+            <img :src="contents.image" alt="Image">
+          </figure>
+        </div>
+        <div class="media-content">
+          <p class="title is-4">{{contents.title}}</p>
+          <p class="subtitle is-6">@johnsmith</p>
+        </div>
+      </div>
+
+      <div class="content">
+        {{contents.content}}<br>
+        <a>{{contents.category}}</a>
+
+        <small>11:09 PM - 1 Jan 2016</small>
+      </div>
+    </div>
+    </div>
+    <p>cek</p>
+</template>
+
+
+
+<template id="form-create">
+  <transition name="modal">
+  <div class="modal-mask">
+    <div class="modal-wrapper">
+      <div class="modal-container">
+
+        <div class="modal-header">
+          <slot name="header">
+          Tambah Data
+          </slot>
+        </div>
+
+        <div class="modal-body">
+          <slot name="body">
+            <div class="field">
+              <label class="label">Title Post</label>
+              <p class="control">
+                <input class="input" type="text" placeholder="Text input" v-model="dataCreate.title">
+              </p>
+            </div>
+            <div class="field">
+              <label class="label">Content</label>
+              <p class="control">
+                <input class="input" type="text" placeholder="Text input" v-model="dataCreate.content">
+              </p>
+            </div>
+            <div class="field">
+              <label class="label">Category</label>
+              <p class="control">
+                <input class="input" type="text" placeholder="Text input" v-model="dataCreate.category">
+              </p>
+            </div>
+            <div class="field">
+              <label class="label">Image</label>
+              <p class="control">
+                <input class="input" type="text" placeholder="Text input" v-model="dataCreate.image">
+              </p>
+            </div>
+          </slot>
+        </div>
+        <button class="modal-default-button button is-warning" @click="$emit('close')">
+          Nanti
+        </button>
+        <button class="modal-default-button button is-primary" @click="postData(dataCreate)">
+          SUBMIT DATA
+        </button>
+        <div class="modal-footer">
+          <slot name="footer">
+
+          </slot>
+        </div>
+      </div>
+    </div>
+  </div>
+</transition>
+</template>
+
+  <!-- navigation -->
+  <script type="text/javascript" src="assets/javascript/sweetalert.min.js"></script>
+  <script type="text/javascript" src="assets/javascript/script.js">
+  </script>
+ </body>
+</html>
