@@ -6,7 +6,8 @@
     "start": "node ./bin/www",
     "dev": "nodemon ./bin/www",
     "build-css": "node-sass --include-path scss ../client/scss/style.scss ../client/style/style.css",
-    "watch-css": "nodemon -e scss -x 'npm run build-css'"
+    "watch-css": "nodemon -e scss -x 'npm run build-css'",
+    "test": "mocha"
   },
   "dependencies": {
     "body-parser": "~1.15.1",
@@ -21,5 +22,10 @@
     "node-sass": "^4.5.2",
     "nodemon": "^1.11.0",
     "slug": "^0.9.1"
+  },
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "chai-http": "^3.0.0",
+    "nightmare": "^2.10.0"
   }
 }

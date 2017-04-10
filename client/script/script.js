@@ -3,7 +3,7 @@ Vue.component('blog-page', {
   props: ['blogData'],
   template: `
   <div class="blog">
-    <h3 id="blog-title">{{ blogData.title }}</h3>
+    <h3 id="blog-title" :title="blogData.slug">{{ blogData.title }}</h3>
     <p id="blog-content">{{ blogData.content }}</p>
     <div class="pixels-photo">
       <p>
@@ -14,15 +14,13 @@ Vue.component('blog-page', {
   `
 })
 
-
-
 Vue.component('sidebar', {
   props: ['articleList'],
   template: `
   <aside class="menu">
     <h2 class="menu-label">Article list</h2>
     <ul class="menu-list">
-      <li v-for="each in articleList"><a @click="pick(each)">{{ each.title }}</a></li>
+      <li v-for="each in articleList"><a :id="each.slug" @click="pick(each)">{{ each.title }}</a></li>
     </ul>
   </aside>
   `,
