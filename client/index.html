@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Music Blog</title>
+    <script src="https://unpkg.com/vue@2.2.6"></script>
+    <script
+    src="https://code.jquery.com/jquery-3.2.1.js"
+    integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE="
+    crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.1/css/materialize.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.1/js/materialize.min.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="style.css" rel="stylesheet">
+  </head>
+  <body>
+    <div id="app">
+      <navigasi></navigasi>
+      <!-- : = v-bind , @ = v-on -->
+      <sidebar :listlagu="datablog" @pilihlagu="gantiLagu"></sidebar>
+      <isi :datablog="onepost"></isi>
+      <bawah></bawah>
+    </div>
+  </body>
+
+  <script>
+  Vue.component('navigasi', {
+    template: `
+    <div class="navbar-fixed">
+        <nav>
+          <div class="nav-wrapper black">
+            <a href="#" data-activates="slide-out" class="button-collapse nav-visible" ><i class="material-icons" id="burger-menu">menu</i></a>
+            <a href="#!" class="brand-logo left" id="logo">Music Blog</a>
+          </div>
+        </nav>
+    </div>
+    `
+  })
+
+  Vue.component('sidebar', {
+    props: ['listlagu'],
+    template: `
+    <div>
+      <ul id="slide-out" class="side-nav">
+        <li>
+          <div class="userView">
+            <div class="background">
+              <img id="pojok" src="http://www.winterparkevents.com/wp-content/uploads/2015/06/Blog.png">
+            </div>
+              <br><br>
+          </div>
+        </li>
+        <li v-for="lagu in listlagu" @click="pilih(lagu)">
+        <a class="waves-effect" href="#!" :id="lagu.slug">{{ lagu.title }}</a>
+        </li>
+      </ul>
+    </div>
+    `,
+    methods: {
+      pilih: function (lagu) {
+        this.$emit('pilihlagu', lagu)
+      }
+    }
+  })
+
+  Vue.component('bawah', {
+    template: `
+    <div>
+      <footer class="page-footer black">
+        <div class="container">
+          <div class="row">
+            <div class="col l6 s12">
+              <h5 class="white-text">Music Blog</h5>
+              <p class="grey-text text-lighten-4">Let the music heals your soul</p>
+            </div>
+          </div>
+        </div>
+          <div class="footer-copyright">
+            <div class="container">
+              © 2017 Copyright Laksono Suryadi
+            </div>
+          </div>
+      </footer>
+    </div>
+    `
+  })
+
+  Vue.component('isi', {
+    props: ['datablog'],
+    template: `
+    <div class="container">
+        <h4>{{ datablog.title }}</h4>
+        <p>{{ datablog.content }}</p>
+        <p>Genre: {{ datablog.category }}</p>
+        <img v-bind:src="datablog.image"><br><br>
+        <iframe width="560" height="315" v-bind:src="datablog.video" frameborder="0" allowfullscreen></iframe><br><br>
+    </div>
+    `
+  })
+
+  var app = new Vue({
+    el: '#app',
+    data: {
+      datablog: [],
+      onepost: {}
+    },
+    methods: {
+      getArticles: function () {
+        let self = this;
+        axios.get('http://localhost:3000/api/article')
+        .then(function (response) {
+          self.datablog = response.data
+          self.onepost = response.data[0]
+          console.log(response.data);
+        })
+        .catch(function(error) {
+          console.log(error);
+        })
+      },
+      gantiLagu: function(lagu) {
+        console.log('gantiLagu ', lagu);
+        this.onepost = lagu
+      }
+    },
+    mounted: function() { //mounted = function that will be executed when the page is already loaded
+      this.getArticles() //getting all items from database (pictures and data)
+    }
+  })
+
+  $(".button-collapse").sideNav({
+    menuWidth: 400,
+    closeOnClick: true
+  }); //to trigger side nav bar
+
+  </script>
+</html>
