@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+  <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  <script src="https://unpkg.com/vue@2.2.6"></script>
+  <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+  <link href="style.css" rel="stylesheet" type="text/css">
+
+	<title>Component layout</title>
+</head>
+
+<body>
+  <div id="app">
+    <kepala></kepala>
+    <post :items="items" :item="item" @pilihitem="gantiitem"></post>
+    <kaki></kaki> 
+  </div>
+</body>
+
+<script>
+
+//THIS IS HEADER
+  Vue.component('kepala', {
+    template: `
+              <div class="navbar navbar-toggleable-md navbar-light bg-faded">
+                <box-kiri></box-kiri>
+                <box-kanan></box-kanan>
+              </div>  
+              `
+  })
+  Vue.component('box-kiri', {
+    template: `
+              <div class="boxkiri">
+                <menubar-kepala></menubar-kepala>
+              </div>  
+              `
+  })
+  Vue.component('box-kanan', {
+    template: `
+              <div class="boxkanan">
+                <search-kepala></search-kepala>
+                <tombol-kepala></tombol-kepala>
+              </div>  
+              `
+  })   
+  Vue.component('tombol-kepala', {
+    template: `
+              <div class="butthead"> 
+              <button type="button" class="btn btn-secondary">Login</button>
+              </div>  
+              `
+  })
+  Vue.component('menubar-kepala', {
+    template: `<div class="menuhead dropdown">
+                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Menu Bar
+                  </button>
+                  <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
+                    <button class="dropdown-item" type="button">Action</button>
+                    <button class="dropdown-item" type="button">Another action</button>
+                    <button class="dropdown-item" type="button">Something else here</button>
+                  </div>
+               </div>
+               `
+  })
+  Vue.component('search-kepala', {
+    template: `<div class="searchhead">
+                <div class="form-group">
+                 <label>Search</label>
+                  <input type="search" placeholder="search">
+                 </div>
+               </div>
+              `
+  })
+
+
+//THIS IS BODY
+  Vue.component('post', {
+    template: `
+              <div class="post">
+                <sisibar :items="items" v-on:pilihitem="gantiitem"></sisibar>
+                <index-post></index-post>
+                <konten-post :items="items" :item="item"></konten-post>
+                <social-post></social-post>
+              </div>
+              `,
+    props: ['items', 'item'],
+    methods: {
+      gantiitem: function(item) {
+        this.$emit('pilihitem', item)
+      }
+    }
+  })  
+  Vue.component('index-post', {
+    template: `<div class="indexpost" style="margin-left:10%">index</div>`
+  })
+  Vue.component('konten-post', {
+    template: `
+              <div style="margin-left:10%">
+                <h4 class="media-heading">{{item.title}}</h4>
+                <p>{{item.content}}</p>
+              </div>
+              `,
+    props: ['items', 'item']      
+  })
+  Vue.component('social-post', {
+    template: `<div style="margin-left:10%">
+                social
+               </div>`
+  })
+
+  Vue.component('sisibar', {
+    template: `
+              <div class="w3-sidebar w3-bar-block" style="width:10%">
+                <ul>
+                  <div v-for="item in items">
+                    <a v-on:click="pilih(item)"  class="w3-bar-item w3-button">{{item.title}}</a>    
+                  </div>
+                </ul>
+              </div>                 
+              `,
+    props: ['items'],
+    methods: {
+      pilih: function(item) {
+        console.log('sidebar');
+        console.log(item);
+        this.$emit('pilihitem', item)
+      }
+    }
+  })
+
+// <div class="w3-sidebar w3-bar-block" style="width:10%">
+
+//THIS IS FOOTER
+  Vue.component('kaki', {
+    template: `
+              <div class="kaki navbar fixed-bottom navbar-toggleable-md navbar-light bg-faded">
+                <kaki-kiri></kaki-kiri>
+                <kaki-kanan></kaki-kanan>
+              </div>  
+              `
+  })
+
+  Vue.component('kaki-kanan', {
+    template: `
+              <div class="kakikanan">
+                <term-kaki></term-kaki>
+              </div>  
+              `
+  })
+
+  Vue.component('kaki-kiri', {
+    template: `
+              <div class="kakikiri">
+                <powered-by-kaki></powered-by-kaki>
+              </div>  
+              `
+  })
+
+  Vue.component('powered-by-kaki', {
+    template: `<div>powered-by-kaki</div>`
+  })
+
+  Vue.component('term-kaki', {
+    template: `<div>term-kaki</div>`
+  })
+
+
+//INITIATE VUE
+  var app = new Vue({
+    el: '#app',
+    data: {
+      item: '',
+      items: []
+    },
+    methods:{
+        gantiitem: function(item) {
+          this.item = item
+        },
+        getData: function(){
+          var self = this;
+          axios.get('http://localhost:3000/api/article')
+          .then(function (res) {
+            console.log(res);
+            res.data.forEach((x) => {
+              self.items.push(x);
+            })
+            self.item = self.items[0];
+            console.log(self.item)
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
+        }
+      },
+      mounted: function() {
+        this.getData();
+      }
+  })
+</script>
+
+</html>

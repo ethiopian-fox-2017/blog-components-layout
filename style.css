@@ -1,0 +1,38 @@
+.butthead {
+	display: flex;
+	justify-content: flex-end;
+}
+
+.menuhead {
+	display: flex;
+	justify-content: flex-start;
+}
+
+.searchhead {
+	display: flex;
+	justify-content: flex-end;
+}
+
+.boxkiri {
+	display: flex;
+	justify-content: flex-start;
+	width: 100%;	
+}
+
+.boxkanan {
+	display: flex;
+	justify-content: flex-end;
+	width: 100%;	
+}
+
+.kakikanan {
+	display: flex;
+	justify-content: flex-end;
+	width: 100%;
+}
+
+.kakikiri {
+	display: flex;
+	justify-content: flex-start;
+	width: 100%;
+}
