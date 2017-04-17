@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>BLOG</title>
+
+    <!-- Bootstrap -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link href="css/simple-sidebar.css" rel="stylesheet">
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="https://unpkg.com/vue@2.2.6" charset="utf-8"></script>
+
+    <style>
+      #logo1 {
+        width: 30px;
+        height: 30px;
+      }
+      .navbar {
+        margin-bottom: 0px;
+      }
+      .divleft {
+        margin-left: 260px;
+      }
+      #sidebar-wrapper {
+        height: 76%;
+      }
+    </style>
+  </head>
+  <body>
+
+    <div id="app">
+    <!-- navbar -->
+      <navbar></navbar>
+    <!-- /#navbar-wrapper -->
+
+    <!-- Sidebar -->
+      <sidebar v-on:selectevent="setIndex" :list-article="articles"></sidebar>
+    <!-- /#sidebar-wrapper -->
+
+      <content-blog v-if="articles.length > 0" :article="articles[indexSelected]"></content-blog>
+
+      <div class="panel panel-default">
+        <div class="panel-footer">Copyright</div>
+      </div>
+
+    </div>
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="js/bootstrap.min.js"></script>
+  </body>
+
+  <script>
+
+    Vue.component('content-blog', {
+      template: `
+      <div class="jumbotron divleft col-sm-12">
+        <h2>{{article.title}}</h2>
+        <img :src="article.image" >
+        <p>{{article.content}}</p>
+        <!-- 16:9 aspect ratio -->
+        <div class="embed-responsive embed-responsive-16by9">
+          <iframe class="embed-responsive-item" :src="article.video"></iframe>
+        </div>
+      </div>
+      `,
+      props: ['article']
+    })
+
+    Vue.component('navbar', {
+      template: `
+      <nav class="navbar navbar-default">
+        <div class="container-fluid">
+          <div class="navbar-header">
+            <a class="navbar-brand" href="#">
+              <div>
+              <img id="logo1" alt="B" src="img/B_logo.png" >
+              LOG
+              </div>
+            </a>
+          </div>
+        </div>
+      </nav>
+      `
+    })
+
+    Vue.component('sidebar', {
+      template: `
+      <div id="sidebar-wrapper">
+          <ul class="sidebar-nav">
+              <li v-for="(article, index) in listArticle">
+                  <a  @click="selected(index)">{{ article.title }}</a>
+              </li>
+          </ul>
+      </div>
+      `,
+      props: ['listArticle'],
+      methods: {
+        selected: function (idx) {
+          // console.log(idx);
+          this.$emit('selectevent' , idx)
+        }
+      }
+    })
+
+    let app = new Vue({
+      el: '#app',
+      data: {
+        articles: [],
+        indexSelected: 0
+      },
+      methods: {
+        getAllArticle: function(){
+          axios.get('http://localhost:3000/api/article')
+          .then(function (response) {
+            app.articles = response.data;
+          })
+          .catch(function (error) {
+            console.log(error);
+          })
+        },
+        setIndex: function(idx){
+          console.log(idx);
+          app.indexSelected = idx;
+        }
+      },
+      mounted: function(){
+        this.getAllArticle();
+      }
+    })
+  </script>
+</html>
